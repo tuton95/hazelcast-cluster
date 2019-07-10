@@ -3,11 +3,11 @@
            xmlns="http://www.hazelcast.com/schema/config"
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <!--<group>-->
-        <!--<name>uat-xlearning</name>-->
-        <!--<password>dev-pass</password>-->
+        <!--<name>uat-thanos</name>-->
+        <!--<password>uat-pass</password>-->
     <!--</group>-->
 
-    <management-center enabled="true" update-interval="3">https://uat-hazelcast.tiki.services/hazelcast-mancenter/</management-center>
+    <!--<management-center enabled="true" update-interval="3">https://uat-hazelcast.tiki.services/hazelcast-mancenter/</management-center>-->
 
     <network>
         <port auto-increment="true" port-count="20">5701</port>
@@ -25,7 +25,7 @@
         <allow-unsafe>true</allow-unsafe>
     </serialization>
 
-    <map name="search_cache">
+    <map name="*_cache">
         <in-memory-format>NATIVE</in-memory-format>
         <statistics-enabled>true</statistics-enabled>
         <backup-count>0</backup-count>
@@ -54,7 +54,7 @@
     </map>
 
     <native-memory allocator-type="POOLED" enabled="true">
-        <size unit="GIGABYTES" value="3"/>
+        <size unit="GIGABYTES" value="1"/>
     </native-memory>
 
     <license-key>9u06mFAO1fUNbEa1HS5VT7rkwIyjK330913112100130003070311912010110511911111111111111111311</license-key>

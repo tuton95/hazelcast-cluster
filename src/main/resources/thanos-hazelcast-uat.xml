@@ -3,8 +3,8 @@
            xmlns="http://www.hazelcast.com/schema/config"
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <group>
-        <name>uat-xlearning</name>
-        <password>dev-pass</password>
+        <name>uat-thanos</name>
+        <password>uat-pass</password>
     </group>
 
     <management-center enabled="true" update-interval="3">https://uat-hazelcast.tiki.services/hazelcast-mancenter/</management-center>
@@ -13,7 +13,7 @@
         <port auto-increment="true" port-count="20">5701</port>
         <join>
             <kubernetes enabled="true">
-                <service-dns>charon-styx-headless.platform.svc.cluster.local</service-dns>
+                <service-dns>thanos-headless.discovery.svc.cluster.local</service-dns>
             </kubernetes>
             <multicast enabled="false">
             </multicast>
@@ -28,33 +28,18 @@
         <allow-unsafe>true</allow-unsafe>
     </serialization>
 
-    <cache name="test">
-        <statistics-enabled>true</statistics-enabled>
-        <in-memory-format>NATIVE</in-memory-format>
-        <backup-count>1</backup-count>
-        <async-backup-count>0</async-backup-count>
-        <eviction size="90" max-size-policy="USED_NATIVE_MEMORY_PERCENTAGE" eviction-policy="LRU"/>
-    </cache>
-
-    <map name="features">
+    <map name="*_cache">
         <in-memory-format>NATIVE</in-memory-format>
         <statistics-enabled>true</statistics-enabled>
         <backup-count>0</backup-count>
         <async-backup-count>1</async-backup-count>
+        <read-backup-data>true</read-backup-data>
         <time-to-live-seconds>0</time-to-live-seconds>
-        <max-idle-seconds>0</max-idle-seconds>
-        <eviction-policy>NONE</eviction-policy>
+        <max-idle-seconds>300</max-idle-seconds>
+        <eviction-policy>LRU</eviction-policy>
         <max-size policy="USED_NATIVE_MEMORY_PERCENTAGE">90</max-size>
         <eviction-percentage>25</eviction-percentage>
         <min-eviction-check-millis>100</min-eviction-check-millis>
-        <read-backup-data>true</read-backup-data>
-        <near-cache>
-            <in-memory-format>NATIVE</in-memory-format>
-            <invalidate-on-change>true</invalidate-on-change>
-            <max-idle-seconds>84600</max-idle-seconds>
-            <time-to-live-seconds>259200</time-to-live-seconds>
-            <eviction eviction-policy="LRU" max-size-policy="USED_NATIVE_MEMORY_SIZE" size="90"/>
-        </near-cache>
         <hot-restart enabled="false">
             <fsync>true</fsync>
         </hot-restart>
@@ -65,7 +50,7 @@
     </map>
 
     <native-memory allocator-type="POOLED" enabled="true">
-        <size unit="GIGABYTES" value="3"/>
+        <size unit="GIGABYTES" value="2"/>
     </native-memory>
 
     <license-key>9u06mFAO1fUNbEa1HS5VT7rkwIyjK330913112100130003070311912010110511911111111111111111311</license-key>
